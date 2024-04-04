@@ -1,17 +1,22 @@
 import express from "express";
-import mongoose from "mongoose";
 import bodyParser from "body-parser";
-import router from "./src/Router/User.router";
+import dotenv from "dotenv";
+import UserRouter from "./src/Router/UserRouter.js";
+import connectDB from "./src/Config/db.js";
+
+dotenv.config({
+  path: "./.env",
+});
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 app.use(bodyParser.json());
 
-mongoose
-  .connect("mongodb://127.0.0.1:27017/test")
-  .then(() => console.log("Connected!"));
-
 app.use(express.json());
-app.use(router);
+app.use("/api", UserRouter);
+
+connectDB();
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
