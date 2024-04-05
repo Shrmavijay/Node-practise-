@@ -5,58 +5,53 @@ import {
   userFindById,
 } from "../Service/UserService.js";
 import StatusCode from "http-status-codes";
+import globalRequestHandler from "../utils/catchAsync.js";
 
-export const saveUser = async (request, response) => {
-  try {
-    const result = await createUser(request.body);
-    response.status(StatusCode.CREATED).json({
-      message: "save sucessfully",
-      data: result,
-    });
-  } catch (error) {
-    response.status(StatusCode.BAD_REQUEST).json({
-      message: "something went worng",
-    });
-  }
-};
+export const saveUser = globalRequestHandler(async (request, response) => {
+  const { name, email, age } = request.body;
+  const result = await createUser({ name, email, age });
+  response.status(StatusCode.CREATED).json({
+    message: "save sucessfully",
+    data: result,
+  });
+});
 
-export const getUser = async (request, response) => {
-  try {
-    const users = await getAllUser();
+export const getUser = globalRequestHandler(async (request, response) => {
+  const users = await getAllUser();
+  response.status(StatusCode.OK).json({
+    message: "get all data sucessfully",
+    data: users,
+  });
+});
+
+export const updateUser = globalRequestHandler(async (request, response) => {
+  const id = request.params.id;
+  const body = request.body;
+  const usersUpdate = await userFindById({ id, body });
+  if (usersUpdate !== null) {
     response.status(StatusCode.OK).json({
-      message: "get all data sucessfully",
-      data: users,
-    });
-  } catch (error) {
-    response.status(StatusCode.BAD_REQUEST).json({
-      message: "something went worng",
-    });
-  }
-};
-
-export const updateUser = async (request, response) => {
-  try {
-    const usersUpdate = await userFindById(request.params.id, request.body);
-    response.status(StatusCode.OK).json({
-      message: " data updated sucessfully",
+      message: " user updated sucessfully",
       data: usersUpdate,
     });
-  } catch (error) {
-    response.status(StatusCode.BAD_REQUEST).json({
-      message: "something went worng",
+  } else {
+    response.status(StatusCode.NOT_FOUND).json({
+      message: "User not found",
     });
   }
-};
+});
 
-export const DeleteUser = async (request, response) => {
-  try {
-    const DeleteUser = await userDeleteById(request.params.id);
+export const DeleteUser = globalRequestHandler(async (request, response) => {
+  // try {
+  const id = request.params.id;
+  const DeleteUser = await userDeleteById(id);
+  if (DeleteUser !== null) {
     response.status(StatusCode.OK).json({
-      message: " data delete sucessfully",
+      message: " user deleted sucessfully",
+      data: DeleteUser,
     });
-  } catch (error) {
-    response.status(StatusCode.BAD_REQUEST).json({
-      message: "something went worng",
+  } else {
+    response.status(StatusCode.NOT_FOUND).json({
+      message: "User not found",
     });
   }
-};
+});
