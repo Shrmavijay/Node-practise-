@@ -1,0 +1,28 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node src/index.ts",
+    "build": "npm run clean && tsc",
+    "tsc": "tsc",
+    "runbuild": "nodemon dist/index.js -e .ts,.js,.env"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "env": "^0.0.2",
+    "env-cmd": "^10.1.0",
+    "express": "^4.19.2",
+    "pg": "^8.11.5",
+    "typescript": "^5.4.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/pg": "^8.11.4"
+  }
+}
