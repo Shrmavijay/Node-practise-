@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/index.ts",
+    "start": "nodemon src/index.ts",
     "build": "npm run clean && tsc",
     "tsc": "tsc",
     "runbuild": "nodemon dist/index.js -e .ts,.js,.env"
@@ -14,15 +14,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.12.1",
+    "body-parser": "^1.20.2",
     "dotenv": "^16.4.5",
-    "env": "^0.0.2",
-    "env-cmd": "^10.1.0",
     "express": "^4.19.2",
+    "http-status-codes": "^2.3.0",
     "pg": "^8.11.5",
-    "typescript": "^5.4.4"
+    "prisma": "^5.12.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
-    "@types/pg": "^8.11.4"
+    "@types/pg": "^8.11.4",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.4"
   }
 }
