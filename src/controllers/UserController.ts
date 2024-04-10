@@ -2,98 +2,66 @@ import { Request, Response } from "express";
 import * as userService from "../services/UserService";
 import { User } from "../models/UserModel";
 import { StatusCodes } from "http-status-codes";
+import globalRequestHandler from "../utils/GlobalRequestHandler";
 
-export const getUsers = async (req: Request, res: Response): Promise<void> => {
-  try {
+export const getUsers = globalRequestHandler(
+  async (req: Request, res: Response): Promise<void> => {
     const users = await userService.getUsers();
-    res.status(StatusCodes.CREATED).json({
-      message: "Data found sucessfully",
+    res.status(StatusCodes.OK).json({
+      message: "Data found successfully",
       data: users,
     });
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error" });
   }
-};
+);
 
-export const getUserById = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const userId = parseInt(req.params.id);
-  try {
+export const getUserById = globalRequestHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const userId = parseInt(req.params.id);
     const user = await userService.getUserById(userId);
     if (user) {
-      res.status(StatusCodes.CREATED).json({
-        message: "User find sucessfully",
+      res.status(StatusCodes.OK).json({
+        message: "User found successfully",
         data: user,
       });
     } else {
       res.status(StatusCodes.NOT_FOUND).json({ message: "User not found" });
     }
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error" });
   }
-};
+);
 
-export const createUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
+export const createUser = globalRequestHandler(
+  async (req: Request, res: Response): Promise<void> => {
     const newUser: User = req.body;
     const createdUser = await userService.createUser(newUser);
     res.status(StatusCodes.CREATED).json({
-      message: "Create user sucessfully",
+      message: "Create user successfully",
       data: createdUser,
     });
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error" });
   }
-};
+);
 
-export const updateUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const userId = parseInt(req.params.id);
-  const updatedUser: User = req.body;
-  try {
+export const updateUser = globalRequestHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const userId = parseInt(req.params.id);
+    const updatedUser: User = req.body;
     const user = await userService.updateUser(userId, updatedUser);
     if (user) {
-      res.status(StatusCodes.CREATED).json({
-        message: "Update user sucessfully",
+      res.status(StatusCodes.OK).json({
+        message: "Update user successfully",
         data: user,
       });
     } else {
       res.status(StatusCodes.NOT_FOUND).json({ message: "User not found" });
     }
-  } catch (error) {
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error" });
   }
-};
+);
 
-export const deleteUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const userId = parseInt(req.params.id);
-  try {
+export const deleteUser = globalRequestHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const userId = parseInt(req.params.id);
     await userService.deleteUser(userId);
     res.status(StatusCodes.OK).send({
-      message: "delete user successful ",
+      message: "Delete user successful",
     });
-  } catch (error) {
-    console.error(`Error deleting user with ID ${userId}:`, error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal Server Error" });
   }
-};
+);
