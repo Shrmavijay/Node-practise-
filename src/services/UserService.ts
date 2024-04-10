@@ -6,7 +6,7 @@ export const getUsers = async (): Promise<User[]> => {
     const getall = await prisma.user.findMany({});
     return getall;
   } catch (error) {
-    console.error("Error fetching users:", error);
+    // console.error("Error fetching users:", error);
     throw new Error("Internal Server Error");
   }
 };
@@ -20,7 +20,7 @@ export const getUserById = async (id: number): Promise<User | null> => {
     });
     return showuser;
   } catch (error) {
-    console.error(`Error fetching user with ID ${id}:`, error);
+    // console.error(`Error fetching user with ID ${id}:`, error);
     throw new Error("Internal Server Error");
   }
 };
@@ -43,7 +43,6 @@ export const createUser = async (user: User): Promise<User> => {
     });
     return newUser;
   } catch (error) {
-    console.error("Error creating user:", error.message);
     throw new Error("Internal Server Error");
   }
 };
@@ -63,7 +62,7 @@ export const updateUser = async (id: number, user: User): Promise<any> => {
     });
     return Userupdate;
   } catch (error) {
-    console.error(`Error updating user with ID ${id}:`, error);
+    // console.error(`Error updating user with ID ${id}:`, error);
     throw new Error("Internal Server Error");
   }
 };
@@ -76,7 +75,7 @@ export const deleteUser = async (id: number): Promise<void> => {
       },
     });
   } catch (error) {
-    console.error(`Error deleting user with ID ${id}:`, error);
+    // console.error(`Error deleting user with ID ${id}:`, error);
     throw new Error("Internal Server Error");
   }
 };
