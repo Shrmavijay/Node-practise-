@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as userService from "../services/UserService";
-import { User } from "../models/UserModel";
+import { User } from "../interface/User.interface";
 import { StatusCodes } from "http-status-codes";
 import globalRequestHandler from "../utils/GlobalRequestHandler";
 

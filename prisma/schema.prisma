@@ -13,10 +13,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model users {
   id         Int      @id @default(autoincrement())
   name       String?
   email      String   @unique
   age        Int
+  Post       post[]
   created_at DateTime @default(now())
+}
+
+model post {
+  id            Int    @id @default(autoincrement())
+  user          users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user_id       Int
+  title         String
+  description   String
+  comment_count Int    @default(0)
 }
