@@ -25,6 +25,14 @@ export const getUserById = async (id: number): Promise<User | null> => {
       where: {
         id: id,
       },
+      include: {
+        Post: {
+          select: {
+            title: true,
+            description: true,
+          },
+        },
+      },
     });
     return showuser;
   } catch (error) {

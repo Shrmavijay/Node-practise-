@@ -30,8 +30,8 @@ export const updatePost = async (id: number, post: Post): Promise<any> => {
         id,
       },
       data: {
-        title,
-        description,
+        title: title,
+      description: description,
       },
     });
     return updatedPost;
@@ -39,3 +39,4 @@ export const updatePost = async (id: number, post: Post): Promise<any> => {
     throw new Error("Internal Server Error");
   }
 };
+
